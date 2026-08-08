@@ -17,5 +17,5 @@ print(stack.pop())
 print(len(stack) == 0)
 
 # iterate through remainder of stack and print the elements
-while (len(stack) != 0):
-  print(stack.pop())
+while len(stack) != 0:
+    print(stack.pop())

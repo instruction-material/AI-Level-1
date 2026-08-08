@@ -17,5 +17,5 @@ print(queue.pop(0))
 print(len(queue) == 0)
 
 # iterate through the remainder of the queue and print its elements
-while (len(queue) != 0):
-  print(queue.pop(0))
+while len(queue) != 0:
+    print(queue.pop(0))

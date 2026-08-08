@@ -1,29 +1,30 @@
 # BankAccount class
 class BankAccount:
 
-  # __init__() method
-  def __init__(self, owner, ir):
-    self.owner = owner
-    self.balance = 0
-    self.interest_rate = ir #as a decimal
+    # __init__() method
+    def __init__(self, owner, ir):
+        self.owner = owner
+        self.balance = 0
+        self.interest_rate = ir  # as a decimal
 
-  # instance methods
-  def deposit(self, amount):
-    self.balance += amount
+    # instance methods
+    def deposit(self, amount):
+        self.balance += amount
 
-  def withdraw(self, amount):
-    if amount <= self.balance:
-      self.balance -= amount
-    else:
-      print("Invalid Transaction: Not enough balance in account.")
+    def withdraw(self, amount):
+        if amount <= self.balance:
+            self.balance -= amount
+        else:
+            print("Invalid Transaction: Not enough balance in account.")
 
-  def calculate_interest(self):
-    interest = self.balance*self.interest_rate
-    self.balance += interest
+    def calculate_interest(self):
+        interest = self.balance * self.interest_rate
+        self.balance += interest
 
-  # __ str__() method
-  def __str__(self):
-    return "Owner: " + self.owner + "\nBalance: " + str(self.balance)
+    # __ str__() method
+    def __str__(self):
+        return "Owner: " + self.owner + "\nBalance: " + str(self.balance)
+
 
 # test the Bank Account class
 print("Creating BankAccount object...")

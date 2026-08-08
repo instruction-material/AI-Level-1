@@ -1,40 +1,42 @@
 class Node:
 
-  def __init__(self, key):
-    self.key = key
-    self.neighbors = []
+    def __init__(self, key):
+        self.key = key
+        self.neighbors = []
 
-  def add_neighbor(self, node):
-    self.neighbors.append(node)
-    
-  def __str__(self):
-    s = "ID: " + self.key + "\nNeighbors: "
-    for n in self.neighbors:
-      s += n.key + "  "
-    return s
+    def add_neighbor(self, node):
+        self.neighbors.append(node)
+
+    def __str__(self):
+        s = "ID: " + self.key + "\nNeighbors: "
+        for n in self.neighbors:
+            s += n.key + "  "
+        return s
+
 
 class Graph:
 
-  def __init__(self):
-    self.graph = {}
+    def __init__(self):
+        self.graph = {}
 
-  def add_node(self, node):
-    self.graph[node.key] = node
+    def add_node(self, node):
+        self.graph[node.key] = node
 
-  def add_edge(self, node1, node2):
-    if not node1.key in self.graph:
-      print("Node with ID " + node1.key + " is not in the graph")
-    elif not node2.key in self.graph:
-      print("Node with ID " + node2.key + " is not in the graph")
-    else:
-      node1.add_neighbor(node2)
-      node2.add_neighbor(node1)
+    def add_edge(self, node1, node2):
+        if not node1.key in self.graph:
+            print("Node with ID " + node1.key + " is not in the graph")
+        elif not node2.key in self.graph:
+            print("Node with ID " + node2.key + " is not in the graph")
+        else:
+            node1.add_neighbor(node2)
+            node2.add_neighbor(node1)
 
-  def __str__(self):
-    s = ""
-    for node in self.graph:
-      s += self.graph[node].__str__() + "\n\n"
-    return s
+    def __str__(self):
+        s = ""
+        for node in self.graph:
+            s += self.graph[node].__str__() + "\n\n"
+        return s
+
 
 # initialize graph
 g = Graph()
@@ -60,4 +62,3 @@ g.add_edge(b, c)
 # print entire graph
 print("Print graph: ")
 print(g)
-    
