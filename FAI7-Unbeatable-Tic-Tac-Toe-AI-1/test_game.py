@@ -9,7 +9,9 @@ spec.loader.exec_module(game)
 
 class TicTacToeContract(unittest.TestCase):
     def test_win_block_fork_draw_and_invalid_moves(self):
-        self.assertEqual(game.best_move(tuple("XX-O-----")), 2)
+        self.assertEqual(game.best_move(tuple("XX--O----")), 2)
+        scores = game.candidate_scores(tuple("XX--O----"))
+        self.assertEqual([c["move"] for c in scores if c["score"] == 0], [2])
         self.assertEqual(game.best_move(tuple("XX-OO-X--")), 5)
         self.assertEqual(game.best_move(tuple("X---O---X")), 1)
         self.assertEqual(game.minimax(game.EMPTY), 0)

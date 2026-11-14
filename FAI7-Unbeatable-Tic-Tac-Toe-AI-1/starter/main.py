@@ -30,7 +30,7 @@ def best_move(board):
 
 
 def main():
-    board = ("X", "X", "-", "O", "-", "-", "-", "-", "-")
+    board = ("X", "X", "-", "-", "O", "-", "-", "-", "-")
     print("Forced block for O:", best_move(board))
 
 
