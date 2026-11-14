@@ -82,4 +82,8 @@ Canonical source repository: `AI-Level-1`
 - Top-level folders: 61
 - Active linked folders: 60
 - Ledgered inactive/support folders: 1
-- Source-like files: 143
+- Source-like files: 139
+
+## Studio contracts
+
+Search labs 13–17 each own distinct starter/solution code and role-local worked guides. FAI7-Unbeatable-Tic-Tac-Toe-AI-1 and FAI8-The-Marble-Game-AI-Copy contain role pairs alongside the preserved legacy root examples. The verification gate runs the seven project-local Python suites, including all 24 small-puzzle boards and all human-X continuations against the Tic-Tac-Toe policy.

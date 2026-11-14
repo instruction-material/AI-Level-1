@@ -129,7 +129,7 @@ class Tree:
         print("Built Tree:", time.time() - t0)
 
         t1 = time.time()
-        root.set_best_child()
+        self.root.set_best_child()
         print("Best Child:", time.time() - t1)
         print("Total Time:", time.time() - t0)
 
@@ -176,10 +176,16 @@ class Tree:
             print("It is now your turn.")
 
             while True:
-                row = int(input("Which row would you like to place your X? "))
-                col = int(
-                    input("Which column would you like to place your X? ")
-                )
+                try:
+                    row = int(input("Which row would you like to place your X? "))
+                    col = int(
+                        input("Which column would you like to place your X? ")
+                    )
+                except ValueError:
+                    print("Enter integer row and column values.")
+                    continue
+                except (EOFError, KeyboardInterrupt):
+                    return
                 if (
                     row < 0
                     or row > 2
@@ -223,8 +229,13 @@ class Tree:
             print("Game over! The AI has won!")
 
 
-start_board = [['-', '-', '-'], ['-', '-', '-'], ['-', '-', '-']]
-print("Initializing...")
-root = TreeNode(start_board, "X")
-tree = Tree(root)
-tree.play_game()
+def main():
+    start_board = [['-', '-', '-'], ['-', '-', '-'], ['-', '-', '-']]
+    print("Initializing...")
+    root = TreeNode(start_board, "X")
+    tree = Tree(root)
+    tree.play_game()
+
+
+if __name__ == "__main__":
+    main()

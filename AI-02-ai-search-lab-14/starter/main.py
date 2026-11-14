@@ -1,20 +1,20 @@
-GRAPH = {
-    "A": ["B", "C"],
-    "B": ["D"],
-    "C": ["E", "F"],
-    "D": [],
-    "E": [],
-    "F": [],
-}
+GRAPH = {"S": ["A", "B"], "A": ["C"], "B": [], "C": ["G"], "G": []}
 
 
-def breadth_first_path(start: str, goal: str) -> list[str]:
-    # TODO: return one path from start to goal.
-    return []
+def depth_limited_search(graph, start, goal, limit):
+    # TODO: check the goal before the cutoff and avoid cycles on the current path.
+    # Return status (found/cutoff/failure), path and node/depth visits.
+    raise NotImplementedError("Implement depth-limited search.")
 
 
-def main() -> None:
-    print(breadth_first_path("A", "F"))
+def iterative_deepening(graph, start, goal, maximum_depth):
+    # TODO: restart DLS at depths 0..maximum_depth; retain each attempt.
+    # Stop on found or failure; only cutoff justifies another depth.
+    raise NotImplementedError("Implement iterative deepening.")
+
+
+def main():
+    print(iterative_deepening(GRAPH, "S", "G", 4))
 
 
 if __name__ == "__main__":

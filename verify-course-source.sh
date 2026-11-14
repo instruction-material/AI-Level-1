@@ -28,4 +28,17 @@ source_count="$(find . \
 
 [ "$source_count" -gt 0 ] || fail "no source-like files found"
 
+for check in \
+  "AI-01-ai-search-lab-13/test_search.py" \
+  "AI-02-ai-search-lab-14/test_search.py" \
+  "AI-03-ai-search-lab-15/test_search.py" \
+  "AI-04-ai-search-lab-16/test_search.py" \
+  "AI-05-ai-search-lab-17/test_search.py" \
+  "FAI7-Unbeatable-Tic-Tac-Toe-AI-1/test_game.py" \
+  "FAI8-The-Marble-Game-AI-Copy/test_game.py"
+do
+  require_file "$check"
+  python3 -B "$check"
+done
+
 printf 'course source verification passed: %s source-like files\n' "$source_count"

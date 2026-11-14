@@ -1,53 +1,49 @@
-from collections import deque
-
-#################
-#   CONSTANTS   #
-#################
-
-GRAPH: dict[str, list[str]] = {
-    "A": ["B", "C"],
-    "B": ["D"],
-    "C": ["E", "F"],
-    "D": [],
-    "E": [],
-    "F": [],
-}
-START_NODE = "A"
-GOAL_NODE = "F"
+GRAPH = {"S": ["A", "B"], "A": ["C"], "B": [], "C": ["G"], "G": []}
 
 
-#################
-#   FUNCTIONS   #
-#################
+def depth_limited_search(graph, start, goal, limit):
+    if not isinstance(limit, int) or isinstance(limit, bool) or limit < 0:
+        raise ValueError("Depth limit must be a nonnegative integer.")
+    visits = []
 
-
-def breadth_first_path(start: str, goal: str) -> list[str]:
-    """Find a path from start to goal using breadth-first search"""
-    queue: deque[list[str]] = deque([[start]])
-    visited = {start}
-
-    # Explore queued paths in order so shorter paths are checked first
-    while queue:
-        path = queue.popleft()
+    def visit(path, remaining):
         node = path[-1]
-
-        # Stop as soon as the goal node is reached
+        visits.append({"node": node, "depth": len(path) - 1})
         if node == goal:
-            return path
+            return "found", path
+        children = [n for n in graph.get(node, []) if n not in path]
+        if not children:
+            return "failure", []
+        if remaining == 0:
+            return "cutoff", []
+        cut_off = False
+        for neighbor in children:
+            status, answer = visit(path + [neighbor], remaining - 1)
+            if status == "found":
+                return status, answer
+            cut_off = cut_off or status == "cutoff"
+        return ("cutoff" if cut_off else "failure"), []
 
-        # Add each unvisited neighbor as a new candidate path
-        for neighbor in GRAPH[node]:
-            # Visit each graph node at most once
-            if neighbor not in visited:
-                visited.add(neighbor)
-                queue.append([*path, neighbor])
-
-    return []
+    status, path = visit([start], limit)
+    return {"status": status, "path": path, "visits": visits}
 
 
-def main() -> None:
-    """Print the sample breadth-first path"""
-    print(breadth_first_path(START_NODE, GOAL_NODE))
+def iterative_deepening(graph, start, goal, maximum_depth):
+    if not isinstance(maximum_depth, int) or isinstance(maximum_depth, bool) or maximum_depth < 0:
+        raise ValueError("Maximum depth must be a nonnegative integer.")
+    attempts = []
+    for limit in range(maximum_depth + 1):
+        result = depth_limited_search(graph, start, goal, limit)
+        attempts.append({"limit": limit, **result})
+        if result["status"] != "cutoff":
+            return {**result, "attempts": attempts}
+    return {**result, "attempts": attempts}
+
+
+def main():
+    for limit in (0, 2, 3, 4):
+        print("DLS", limit, depth_limited_search(GRAPH, "S", "G", limit))
+    print("IDS", iterative_deepening(GRAPH, "S", "G", 4))
 
 
 if __name__ == "__main__":

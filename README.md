@@ -8,5 +8,11 @@ removed. Keep starter and solution material in the project directory that owns
 it; do not re-add root-level standalone copies or legacy archive folders.
 
 - Course catalog entry: `/Users/jacobanderson/Sites/classes.jacobdanderson.net/front-end/src/stores/courses/ai-level-1.ts`
-- GitHub repo clone: `/Users/jacobanderson/Documents/Work/Instruction-Material/AI-Level-1`
+- GitHub repo clone: `/Users/jacobanderson/Documents/Work/Juni/AI Level 1`
 - Legacy Dropbox source: `/Users/jacobanderson/Documents/Work/Juni/AI Level 1/dropbox-source`
+
+## Search and game studios
+
+Labs 13–17 have separate starter and solution folders for BFS instrumentation, depth limits, weighted search, greedy/A* comparison and puzzle evaluation. The Tic-Tac-Toe AI 1 and Marble Game AI Copy folders also provide separate starter/solution packs; their root scripts preserve the earlier tree-based variants. Each project README supplies worked inputs, expected behavior and boundaries.
+
+Run ./verify-course-source.sh to check source readiness and all seven studio regression suites. The suites use only the Python standard library.

@@ -53,8 +53,8 @@ class Tree:
 
     def __init__(self, rootNode):
         self.root = rootNode
-        self.build_tree(root)
-        root.set_best_child()
+        self.build_tree(self.root)
+        self.root.set_best_child()
 
     def build_tree(self, node):
         if node.num_marbles == 0:
@@ -87,9 +87,15 @@ class Tree:
             print("It's your turn!")
 
             while True:
-                move = int(
-                    input("How many marbles would you like to pick up? ")
-                )
+                try:
+                    move = int(
+                        input("How many marbles would you like to pick up? ")
+                    )
+                except ValueError:
+                    print("Enter a whole number of marbles.")
+                    continue
+                except (EOFError, KeyboardInterrupt):
+                    return
                 valid_move = False
                 for child in curr.children:
                     if child.num_marbles == curr.num_marbles - move:
@@ -124,7 +130,12 @@ class Tree:
                 break
 
 
-marble_count = 5
-root = TreeNode(marble_count, False)
-tree = Tree(root)
-tree.play_game()
+def main():
+    marble_count = 5
+    root = TreeNode(marble_count, False)
+    tree = Tree(root)
+    tree.play_game()
+
+
+if __name__ == "__main__":
+    main()
