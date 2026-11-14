@@ -91,3 +91,7 @@ Search labs 13–17 each own distinct starter/solution code and role-local worke
 ## Optional project contracts
 
 All eighteen generated optional folders now name a particular state, traversal, rule, measurement or search/game comparison. Four early-unit options supply their own input and function contracts. Fourteen studio options include the completed parent algorithm in studio.py, leaving the extension implementation in main.py. Their project-local checks run as part of source verification; they include cutoff/reopening counterexamples, all tiny-puzzle states, rotated game positions and seeded legal opponents.
+
+## Legacy depth-limit correction
+
+FAI9-Implement-DLS/main.py and FAI9-Implement-IDS/main.py now track the best depth reached, with unique printed first visits. Their READMEs and test_legacy_depth.py document and verify the shallower-route counterexample, cycles, disconnected vertices, original DLS demonstration and exhaustive small-graph reachability. Other legacy reference-bank entries retain their own review status.

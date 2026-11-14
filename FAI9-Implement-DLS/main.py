@@ -42,16 +42,25 @@ class Graph:
         if depth_limit < 0:
             return
 
-        visited = {start_node}
-        stack = [(start_node, 0)]  # track depth in stack
-        while len(stack) != 0:
+        best_depth = {start_node: 0}
+        printed = set()
+        stack = [(start_node, 0)]
+        while stack:
             node, depth = stack.pop()
-            print(node.key, end=" ")
+            if depth != best_depth[node]:
+                continue
+            # Print each node once; a shallower route may still re-expand it.
+            if node not in printed:
+                printed.add(node)
+                print(node.key, end=" ")
             for neighbor in node.neighbors:
-                # visit a node's neighbor only if it is below depth limit and has not yet been visited
-                if neighbor not in visited and depth + 1 <= depth_limit:
-                    visited.add(neighbor)
-                    stack.append((neighbor, depth + 1))
+                next_depth = depth + 1
+                if (
+                    next_depth <= depth_limit
+                    and next_depth < best_depth.get(neighbor, float("inf"))
+                ):
+                    best_depth[neighbor] = next_depth
+                    stack.append((neighbor, next_depth))
 
 
 # initialize graph

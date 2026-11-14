@@ -35,7 +35,8 @@ for check in \
   "AI-04-ai-search-lab-16/test_search.py" \
   "AI-05-ai-search-lab-17/test_search.py" \
   "FAI7-Unbeatable-Tic-Tac-Toe-AI-1/test_game.py" \
-  "FAI8-The-Marble-Game-AI-Copy/test_game.py"
+  "FAI8-The-Marble-Game-AI-Copy/test_game.py" \
+  "test_legacy_depth.py"
 do
   require_file "$check"
   python3 -B "$check"
