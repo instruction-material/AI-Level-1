@@ -1,14 +1,13 @@
-# Applied Studio 11: ai search lab 13 supplemental 2
+# Trace a route through a cyclic graph
 
-Course: AI Level 1
-Module: Applied Studio 11: ai search lab 13 supplemental 2
+Change the original tree into A → B,C; B → D; C → A,G; D → G. The back edge C → A must not enqueue A again. A,C,G has two edges; A,B,D,G has three. Report the two-edge path and expanded order A,B,C,D,G. The expanded order itself is not a legal route.
 
-Use the starter folder first. The starter is intentionally incomplete, and the solution shows one clean way to finish the same build after the student has worked through it.
+## Task
 
-Suggested flow:
-- Read the module brief and identify the core requirement.
-- Complete the TODO markers in the starter implementation.
-- Test at least one custom case beyond the default example.
-- Compare against the solution only after the student has a working draft.
+Complete solve_extension in main.py. The studio.py file supplies the already completed parent algorithm; use it to isolate this exercise's changed input, diagnostic or evaluation. Keep the game/search rules and goal test separate from the measurements. Run python3 main.py in the selected role folder.
 
-Quick run hint: `python3 main.py`
+## Expected result
+
+{"expanded": ["A", "B", "C", "D", "G"], "path": ["A", "C", "G"]}
+
+Try one additional case and explain which assumption changed. The source uses only the Python standard library.

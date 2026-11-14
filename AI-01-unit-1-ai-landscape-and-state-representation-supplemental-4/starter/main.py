@@ -1,21 +1,17 @@
-GRAPH = {
-    "A": ["B", "C"],
-    "B": ["D"],
-    "C": ["E", "F"],
-    "D": [],
-    "E": [],
-    "F": [],
-}
+WIDTH, HEIGHT = 2, 2
+BLOCKED = {(1, 0)}
 
 
-def breadth_first_path(start: str, goal: str) -> list[str]:
-    # TODO: return one path from start to goal.
-    return []
+def legal_next(position):
+    # TODO: implement the README contract.
+    raise NotImplementedError("Implement legal_next.")
 
 
-def main() -> None:
-    print(breadth_first_path("A", "F"))
+def solve_extension():
+    # TODO: implement the README contract.
+    raise NotImplementedError("Implement solve_extension.")
 
 
 if __name__ == "__main__":
-    main()
+    import json
+    print(json.dumps(solve_extension(), sort_keys=True))

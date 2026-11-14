@@ -1,14 +1,13 @@
-# Applied Studio 15: ai search lab 17 supplemental 3
+# Evaluate the complete tiny puzzle space
 
-Course: AI Level 1
-Module: Applied Studio 15: ai search lab 17 supplemental 3
+Enumerate all 24 permutations. Twelve can reach the goal and twelve cannot; the longest minimum path is six moves. Among reachable states, two non-goal boards still have blank-distance zero. Report both coverage and this score limitation. This finite benchmark describes the 2×2 puzzle, not all search problems.
 
-Use the starter folder first. The starter is intentionally incomplete, and the solution shows one clean way to finish the same build after the student has worked through it.
+## Task
 
-Suggested flow:
-- Read the module brief and identify the core requirement.
-- Complete the TODO markers in the starter implementation.
-- Test at least one custom case beyond the default example.
-- Compare against the solution only after the student has a working draft.
+Complete solve_extension in main.py. The studio.py file supplies the already completed parent algorithm; use it to isolate this exercise's changed input, diagnostic or evaluation. Keep the game/search rules and goal test separate from the measurements. Run python3 main.py in the selected role folder.
 
-Quick run hint: `python3 main.py`
+## Expected result
+
+{"false_zero_scores": 2, "max_shortest_moves": 6, "reachable": 12, "unreachable": 12}
+
+Try one additional case and explain which assumption changed. The source uses only the Python standard library.

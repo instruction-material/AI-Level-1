@@ -1,14 +1,15 @@
-# Unit 7: Features, Evaluation, and Responsible AI supplemental 3
+# Evaluate a toy classifier by failure slice
 
-Course: AI Level 1
-Module: Unit 7: Features, Evaluation, and Responsible AI supplemental 3
+The eight fictional rows are (group,expected,predicted). Group A has one correct result in four; group B has three in four. Overall accuracy is four/eight=0.5, while the slices are 0.25 and 0.75. Two of four positive examples are found, so positive recall is 0.5. These synthetic slices reveal where this toy program fails; they support no conclusion about real people. Also check an imbalanced case with nine negative labels and one positive: always predicting zero gives 0.9 accuracy but zero positive recall.
 
-Use the starter folder first. The starter is intentionally incomplete, and the solution shows one clean way to finish the same build after the student has worked through it.
+## Build and verify
 
-Suggested flow:
-- Read the module brief and identify the core requirement.
-- Complete the TODO markers in the starter implementation.
-- Test at least one custom case beyond the default example.
-- Compare against the solution only after the student has a working draft.
+Implement the named functions and solve_extension in main.py. Run python3 main.py from the chosen role folder. The JSON output represents tuple states as arrays. Use the worked case and the stated boundary checks before changing an input. The source uses only the Python standard library.
 
-Quick run hint: `python3 main.py`
+## Expected result
+
+{"groups": {"A": 0.25, "B": 0.75}, "overall": 0.5, "positive_recall": 0.5}
+
+## Function contract
+
+metrics(rows) accepts (group,expected,predicted) tuples with binary labels and returns overall, groups and positive_recall. Empty rows give overall None; no positive examples give positive_recall None. The starter supplies all eight ROWS explicitly.

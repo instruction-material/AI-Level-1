@@ -1,21 +1,13 @@
-GRAPH = {
-    "A": ["B", "C"],
-    "B": ["D"],
-    "C": ["E", "F"],
-    "D": [],
-    "E": [],
-    "F": [],
-}
+def route(alert):
+    # TODO: implement the README contract.
+    raise NotImplementedError("Implement route.")
 
 
-def breadth_first_path(start: str, goal: str) -> list[str]:
-    # TODO: return one path from start to goal.
-    return []
-
-
-def main() -> None:
-    print(breadth_first_path("A", "F"))
+def solve_extension():
+    # TODO: implement the README contract.
+    raise NotImplementedError("Implement solve_extension.")
 
 
 if __name__ == "__main__":
-    main()
+    import json
+    print(json.dumps(solve_extension(), sort_keys=True))

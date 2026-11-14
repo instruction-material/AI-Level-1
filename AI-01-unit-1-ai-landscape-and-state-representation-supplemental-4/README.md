@@ -1,14 +1,15 @@
-# Unit 1: AI Landscape and State Representation supplemental 4
+# Represent legal grid actions
 
-Course: AI Level 1
-Module: Unit 1: AI Landscape and State Representation supplemental 4
+Encode a state as (row,column) in a 2×2 grid, with blocked cell (1,0). Each action moves one cell horizontally or vertically. From (0,0), only (0,1) is legal; from (1,1), only (0,1) is legal. Reject out-of-bounds and blocked start states. Separating state validity from legal actions gives later searches a precise problem model.
 
-Use the starter folder first. The starter is intentionally incomplete, and the solution shows one clean way to finish the same build after the student has worked through it.
+## Build and verify
 
-Suggested flow:
-- Read the module brief and identify the core requirement.
-- Complete the TODO markers in the starter implementation.
-- Test at least one custom case beyond the default example.
-- Compare against the solution only after the student has a working draft.
+Implement the named functions and solve_extension in main.py. Run python3 main.py from the chosen role folder. The JSON output represents tuple states as arrays. Use the worked case and the stated boundary checks before changing an input. The source uses only the Python standard library.
 
-Quick run hint: `python3 main.py`
+## Expected result
+
+{"from_goal": [[0, 1]], "from_start": [[0, 1]]}
+
+## Function contract
+
+legal_next(position) returns legal destination tuples and rejects blocked or out-of-bounds positions. The starter supplies WIDTH, HEIGHT and BLOCKED.

@@ -1,54 +1,28 @@
 from collections import deque
 
-#################
-#   CONSTANTS   #
-#################
-
-GRAPH: dict[str, list[str]] = {
-    "A": ["B", "C"],
-    "B": ["D"],
-    "C": ["E", "F"],
-    "D": [],
-    "E": [],
-    "F": [],
-}
-START_NODE = "A"
-GOAL_NODE = "F"
+GRAPH = {"S": ["A", "B"], "A": ["C"], "B": ["D", "S"], "C": ["G"], "D": [], "G": []}
 
 
-#################
-#   FUNCTIONS   #
-#################
-
-
-def breadth_first_path(start: str, goal: str) -> list[str]:
-    """Find a path from start to goal using breadth-first search"""
-    queue: deque[list[str]] = deque([[start]])
-    visited = {start}
-
-    # Explore queued paths in order so shorter paths are checked first
-    while queue:
-        path = queue.popleft()
-        node = path[-1]
-
-        # Stop as soon as the goal node is reached
-        if node == goal:
-            return path
-
-        # Add each unvisited neighbor as a new candidate path
-        for neighbor in GRAPH[node]:
-            # Visit each graph node at most once
+def traversal(policy):
+    if policy not in ("stack", "queue"):
+        raise ValueError("Use stack or queue.")
+    frontier = deque(["S"])
+    visited, order = set(), []
+    while frontier:
+        node = frontier.pop() if policy == "stack" else frontier.popleft()
+        if node in visited:
+            continue
+        visited.add(node)
+        order.append(node)
+        for neighbor in GRAPH.get(node, []):
             if neighbor not in visited:
-                visited.add(neighbor)
-                queue.append([*path, neighbor])
-
-    return []
+                frontier.append(neighbor)
+    return order
 
 
-def main() -> None:
-    """Print the sample breadth-first path"""
-    print(breadth_first_path(START_NODE, GOAL_NODE))
-
+def solve_extension():
+    return {policy: traversal(policy) for policy in ("stack", "queue")}
 
 if __name__ == "__main__":
-    main()
+    import json
+    print(json.dumps(solve_extension(), sort_keys=True))

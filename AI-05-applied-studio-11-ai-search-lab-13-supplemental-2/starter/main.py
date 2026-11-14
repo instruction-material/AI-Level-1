@@ -1,21 +1,11 @@
-GRAPH = {
-    "A": ["B", "C"],
-    "B": ["D"],
-    "C": ["E", "F"],
-    "D": [],
-    "E": [],
-    "F": [],
-}
+from studio import breadth_first_search
 
 
-def breadth_first_path(start: str, goal: str) -> list[str]:
-    # TODO: return one path from start to goal.
-    return []
-
-
-def main() -> None:
-    print(breadth_first_path("A", "F"))
+def solve_extension():
+    # TODO: implement the specific comparison in README.md.
+    raise NotImplementedError("Complete this optional exercise.")
 
 
 if __name__ == "__main__":
-    main()
+    import json
+    print(json.dumps(solve_extension(), sort_keys=True))

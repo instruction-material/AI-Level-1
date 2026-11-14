@@ -1,54 +1,23 @@
-from collections import deque
-
-#################
-#   CONSTANTS   #
-#################
-
-GRAPH: dict[str, list[str]] = {
-    "A": ["B", "C"],
-    "B": ["D"],
-    "C": ["E", "F"],
-    "D": [],
-    "E": [],
-    "F": [],
-}
-START_NODE = "A"
-GOAL_NODE = "F"
+from random import Random
+from studio import baseline_move, best_move, take
 
 
-#################
-#   FUNCTIONS   #
-#################
-
-
-def breadth_first_path(start: str, goal: str) -> list[str]:
-    """Find a path from start to goal using breadth-first search"""
-    queue: deque[list[str]] = deque([[start]])
-    visited = {start}
-
-    # Explore queued paths in order so shorter paths are checked first
-    while queue:
-        path = queue.popleft()
-        node = path[-1]
-
-        # Stop as soon as the goal node is reached
-        if node == goal:
-            return path
-
-        # Add each unvisited neighbor as a new candidate path
-        for neighbor in GRAPH[node]:
-            # Visit each graph node at most once
-            if neighbor not in visited:
-                visited.add(neighbor)
-                queue.append([*path, neighbor])
-
-    return []
-
-
-def main() -> None:
-    """Print the sample breadth-first path"""
-    print(breadth_first_path(START_NODE, GOAL_NODE))
-
+def solve_extension():
+    rng = Random(7)
+    result = {"games": 12, "AI_wins": 0, "opponent_wins": 0, "forced_start_wins": 0}
+    for initial in range(1, 13):
+        pile, ai_turn = initial, True
+        while pile:
+            move = best_move(pile) if ai_turn else baseline_move(pile, rng)
+            pile = take(pile, move)
+            if pile == 0:
+                result["AI_wins" if ai_turn else "opponent_wins"] += 1
+                if ai_turn and initial % 4:
+                    result["forced_start_wins"] += 1
+                break
+            ai_turn = not ai_turn
+    return result
 
 if __name__ == "__main__":
-    main()
+    import json
+    print(json.dumps(solve_extension(), sort_keys=True))

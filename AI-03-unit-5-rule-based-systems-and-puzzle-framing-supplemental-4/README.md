@@ -1,14 +1,15 @@
-# Unit 5: Rule-Based Systems and Puzzle Framing supplemental 4
+# Explain an ordered alert rule
 
-Course: AI Level 1
-Module: Unit 5: Rule-Based Systems and Puzzle Framing supplemental 4
+Route fictional device alerts through ordered rules. Offline devices go to connection review first. Otherwise, backlog ≥3 goes to queue review; the remaining online alerts go to monitoring. An offline alert with backlog nine matches both conditions, but the first rule determines its route. Return a reason with the decision. Test the boundary at backlog two versus three and reject invalid data.
 
-Use the starter folder first. The starter is intentionally incomplete, and the solution shows one clean way to finish the same build after the student has worked through it.
+## Build and verify
 
-Suggested flow:
-- Read the module brief and identify the core requirement.
-- Complete the TODO markers in the starter implementation.
-- Test at least one custom case beyond the default example.
-- Compare against the solution only after the student has a working draft.
+Implement the named functions and solve_extension in main.py. Run python3 main.py from the chosen role folder. The JSON output represents tuple states as arrays. Use the worked case and the stated boundary checks before changing an input. The source uses only the Python standard library.
 
-Quick run hint: `python3 main.py`
+## Expected result
+
+[{"reason": "offline rule takes priority", "route": "connection"}, {"reason": "backlog is at least three", "route": "queue"}, {"reason": "online with backlog below three", "route": "monitor"}]
+
+## Function contract
+
+route(alert) accepts an offline boolean and nonnegative integer backlog. It returns route and reason. Reject nonboolean offline values and invalid backlog values.

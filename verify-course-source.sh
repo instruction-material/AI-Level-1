@@ -41,4 +41,13 @@ do
   python3 -B "$check"
 done
 
+optional_checks=0
+for check in AI-*-supplemental-*/test_optional.py
+do
+  require_file "$check"
+  python3 -B "$check"
+  optional_checks=$((optional_checks + 1))
+done
+[ "$optional_checks" -eq 18 ] || fail "expected all eighteen optional project checks"
+
 printf 'course source verification passed: %s source-like files\n' "$source_count"

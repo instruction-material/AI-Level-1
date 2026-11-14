@@ -1,14 +1,15 @@
-# Unit 2: Stacks, Queues, and Traversal Intuition supplemental 4
+# Compare stack and queue traversal
 
-Course: AI Level 1
-Module: Unit 2: Stacks, Queues, and Traversal Intuition supplemental 4
+Use S → A,B; A → C; B → D,S; C → G. Append neighbors in the written order. A stack pops from the newest end and visits S,B,D,A,C,G. A queue pops the oldest entry and visits S,A,B,C,D,G. The back edge B → S must not cause a repeat. These are traversal orders, not reconstructed paths. Explain how the same stored frontier can produce either policy.
 
-Use the starter folder first. The starter is intentionally incomplete, and the solution shows one clean way to finish the same build after the student has worked through it.
+## Build and verify
 
-Suggested flow:
-- Read the module brief and identify the core requirement.
-- Complete the TODO markers in the starter implementation.
-- Test at least one custom case beyond the default example.
-- Compare against the solution only after the student has a working draft.
+Implement the named functions and solve_extension in main.py. Run python3 main.py from the chosen role folder. The JSON output represents tuple states as arrays. Use the worked case and the stated boundary checks before changing an input. The source uses only the Python standard library.
 
-Quick run hint: `python3 main.py`
+## Expected result
+
+{"queue": ["S", "A", "B", "C", "D", "G"], "stack": ["S", "B", "D", "A", "C", "G"]}
+
+## Function contract
+
+traversal(policy) accepts stack or queue and returns the full visited order. Reject other policy names. The starter supplies GRAPH in neighbor order.
