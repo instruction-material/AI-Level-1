@@ -82,7 +82,7 @@ Canonical source repository: `AI-Level-1`
 - Top-level folders: 61
 - Active linked folders: 60
 - Ledgered inactive/support folders: 1
-- Source-like files: 233
+- Source-like files: 236
 
 ## Studio contracts
 
@@ -107,3 +107,7 @@ FAI1-Bank-Account-Class rejects negative/nonfinite transaction amounts before st
 ## Legacy adventure choices
 
 FAI2-Adventure-Game follows only the current node's directed outgoing edges. The Airports companion likewise accepts only direct outgoing flights and ends at a dead end. Six regressions cover unknown choices, known non-neighbors, normalized input, original terminal routes and both documented flight totals. The source gate now runs 29 suites and 66 checks across 233 source-like files.
+
+## Legacy game-tree roots
+
+The updated Tic-Tac-Toe and two-player Marble constructors build and evaluate their supplied roots. Four checks cover both original global-root counterexamples, three minimax variants against every reachable endgame with at most four empty squares, and both Marble AI variants for counts zero through ten. The source gate now runs 30 suites and 70 checks across 236 source-like files.

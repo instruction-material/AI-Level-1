@@ -136,7 +136,7 @@ class Tree:
         print("Built Tree:", time.time() - t0)
 
         t1 = time.time()
-        root.set_best_child()
+        self.root.set_best_child()
         print("Best Child:", time.time() - t1)
         print("Total Time:", time.time() - t0)
 

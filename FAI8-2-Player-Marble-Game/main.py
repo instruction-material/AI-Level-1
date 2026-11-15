@@ -16,7 +16,7 @@ class Tree:
 
     def __init__(self, rootNode):
         self.root = rootNode
-        self.build_tree(root)
+        self.build_tree(self.root)
 
     def build_tree(self, node):
         if node.num_marbles == 0:

@@ -39,7 +39,8 @@ for check in \
   "test_legacy_depth.py" \
   "test_legacy_informed.py" \
   "test_legacy_objects.py" \
-  "test_legacy_adventure.py"
+  "test_legacy_adventure.py" \
+  "test_legacy_game_roots.py"
 do
   require_file "$check"
   python3 -B "$check"
