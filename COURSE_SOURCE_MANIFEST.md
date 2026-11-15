@@ -82,7 +82,7 @@ Canonical source repository: `AI-Level-1`
 - Top-level folders: 61
 - Active linked folders: 60
 - Ledgered inactive/support folders: 1
-- Source-like files: 230
+- Source-like files: 233
 
 ## Studio contracts
 
@@ -103,3 +103,7 @@ FAI10-Implement-A-Search and FAI10-Implement-Greedy-Search now use per-state goa
 ## Legacy object examples
 
 FAI1-Bank-Account-Class rejects negative/nonfinite transaction amounts before state changes. FAI1-Deck-of-Cards uses uniform Fisher-Yates swaps and the Clubs suit. Both provide project-local worked guides. Six object-example checks join the source gate, now28suites/60checks/230source-likefiles, including complete demonstrations, amount boundaries and all six three-card permutation outcomes.
+
+## Legacy adventure choices
+
+FAI2-Adventure-Game follows only the current node's directed outgoing edges. The Airports companion likewise accepts only direct outgoing flights and ends at a dead end. Six regressions cover unknown choices, known non-neighbors, normalized input, original terminal routes and both documented flight totals. The source gate now runs 29 suites and 66 checks across 233 source-like files.

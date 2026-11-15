@@ -45,6 +45,9 @@ class StateSpaceGraph:
         n = start
         time = 0
         while n != end:
+            if not n.neighbors:
+                print("No flights available from " + n.state + ".")
+                return
             print(
                 "You are in "
                 + n.state
@@ -59,14 +62,16 @@ class StateSpaceGraph:
                     + " | Key: "
                     + key
                 )
+            choices = {key.casefold(): key for key in n.neighbors}
             location = ""
-            while location not in self.graph:
+            while location not in choices:
                 print()
                 location = input(
                     "Type in the key of the place you would like to go: "
-                )
-            time += n.neighbors[location]
-            n = self.graph[location]
+                ).strip().casefold()
+            destination_key = choices[location]
+            time += n.neighbors[destination_key]
+            n = self.graph[destination_key]
             print()
         print()
         print(

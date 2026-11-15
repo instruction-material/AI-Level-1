@@ -42,8 +42,12 @@ class AdventureGraph:
     # write this method for the game
     def start_adventure(self, node):
         while len(node.neighbors) != 0:
-            ans = input(node.prompt)
-            node = self.graph[ans]
+            choices = {neighbor.key.casefold(): neighbor for neighbor in node.neighbors}
+            ans = input(node.prompt).strip().casefold()
+            if ans not in choices:
+                print("Choose: " + ", ".join(neighbor.key for neighbor in node.neighbors))
+                continue
+            node = choices[ans]
         print(self.graph[node.key].prompt)
 
 
