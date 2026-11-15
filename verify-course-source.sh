@@ -40,7 +40,9 @@ for check in \
   "test_legacy_informed.py" \
   "test_legacy_objects.py" \
   "test_legacy_adventure.py" \
-  "test_legacy_game_roots.py"
+  "test_legacy_game_roots.py" \
+  "test_legacy_puzzles.py" \
+  "test_legacy_maze.py"
 do
   require_file "$check"
   python3 -B "$check"

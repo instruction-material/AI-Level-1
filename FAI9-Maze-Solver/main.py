@@ -114,18 +114,25 @@ class Graph:
         print("\nDLS Traversal with Depth of " + str(depth_limit) + ": ")
         if depth_limit < 0:
             return []
-        visited = {start_node}
-        stack = [(start_node, 0, [start_node.key])]  # track depth in stack
-        while len(stack) != 0:
+        best_depth = {start_node: 0}
+        stack = [(start_node, 0, [start_node.key])]
+        while stack:
             node, depth, path = stack.pop()
+            if depth != best_depth[node]:
+                continue
             print(node.key)
             if node == end_node:
                 return path
+            if depth == depth_limit:
+                continue
             for neighbor_key in node.neighbors:
                 neighbor = self.graph[neighbor_key]
-                if neighbor not in visited and depth + 1 <= depth_limit:
-                    visited.add(neighbor)
-                    stack.append((neighbor, depth + 1, path + [neighbor.key]))
+                next_depth = depth + 1
+                if next_depth < best_depth.get(neighbor, float("inf")):
+                    best_depth[neighbor] = next_depth
+                    stack.append((neighbor, next_depth, path + [neighbor.key]))
+        return None
+
 
     def get_ucs_path(self, start_node, end_node):
         print("UCS Traversal: ")

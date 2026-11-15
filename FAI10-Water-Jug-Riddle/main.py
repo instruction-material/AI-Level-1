@@ -48,6 +48,10 @@ class Node:
         else:
             return diff
 
+    def get_admissible_heuristic(self):
+        # Every unsolved state needs at least one unit-cost action.
+        return 0 if self.is_solved() else 1
+
     # generate all possible neighbors of current node
     def generate_neighbors(self):
         neighbors = []
@@ -117,37 +121,27 @@ class Graph:
 
     # solve the riddle using A* search
     def a_star_solve(self):
-        visited = set()
-        q = PriorityQueue()
-        count = 0  # stores number of nodes visited
+        frontier = PriorityQueue()
+        frontier.put((self.start_node.get_admissible_heuristic(), 0,
+                      self.start_node, [self.start_node]))
+        best_cost = {self.start_node: 0}
+        count = 0
+        while not frontier.empty():
+            _, cost, node, path = frontier.get()
+            if cost != best_cost[node]:
+                continue
+            count += 1
+            if node.is_solved():
+                return path, count
+            node.generate_neighbors()
+            for neighbor in node.neighbors:
+                next_cost = cost + 1
+                if next_cost < best_cost.get(neighbor, float("inf")):
+                    best_cost[neighbor] = next_cost
+                    frontier.put((next_cost + neighbor.get_admissible_heuristic(),
+                                  next_cost, neighbor, path + [neighbor]))
+        return None
 
-        # calculate h and g for the root
-        h = self.start_node.get_heuristic()
-        g = 0
-        f = g + h
-        # queue takes a tuple: (f, depth, node, path so far)
-        q.put((f, g, self.start_node, [self.start_node]))
-
-        while not q.empty():
-            f, depth, n, path = q.get()
-
-            # only search node if it hasn't been visited
-            if n not in visited:
-                count += 1
-                visited.add(n)
-
-                # if board is solved, return
-                if n.is_solved():
-                    return path, count
-
-                # if board not solved, generate neighbors and keep searching
-                n.generate_neighbors()
-                for neighbor in n.neighbors:
-                    if neighbor not in visited:
-                        h = neighbor.get_heuristic()
-                        g = depth + 1
-                        f = g + h
-                        q.put((f, g, neighbor, path + [neighbor]))
 
 
 start = Node(0, 0)

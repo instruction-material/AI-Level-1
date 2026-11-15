@@ -62,6 +62,8 @@ class Node:
         sumofmd = 0
         for i in range(0, 3):
             for j in range(0, 3):
+                if self.board[i][j] == " ":
+                    continue
                 sumofmd += self.manhattan_distance(
                     i,
                     j,
@@ -69,6 +71,13 @@ class Node:
                     positions[self.board[i][j]][1],
                 )
         return sumofmd
+
+    def is_solvable(self):
+        # A valid 3-by-3 board reaches the goal exactly when inversion parity is even.
+        values = [tile for row in self.board for tile in row if tile != " "]
+        inversions = sum(left > right for i, left in enumerate(values)
+                         for right in values[i + 1:])
+        return inversions % 2 == 0
 
     def generate_neighbors(self):
         neighbors = []
@@ -152,73 +161,59 @@ class PuzzleGraph:
         self.start_node = node
 
     def astarsearch(self):
-        visited = set()
-        pq = queue.PriorityQueue()
-        f = 0 + self.start_node.heuristic()
-        pq.put((f, self.start_node, 0, [self.start_node]))
-
-        while not pq.empty():
-            func, node, level, path = pq.get()
-
+        if not self.start_node.is_solvable():
+            return "didn't work"
+        frontier = queue.PriorityQueue()
+        frontier.put((self.start_node.heuristic(), 0, self.start_node,
+                      [self.start_node]))
+        best_cost = {self.start_node: 0}
+        while not frontier.empty():
+            _, cost, node, path = frontier.get()
+            if cost != best_cost[node]:
+                continue
             if node.solved():
                 return path
-
-            print(level)
-            print(node)
-
-            if node not in visited:
-                visited.add(node)
-
-                node.generate_neighbors()
-
-                print("neighbors")
-
-                for neighbor in node.neighbors:
-                    if neighbor not in visited:
-                        level += 1
-                        # cost = level
-                        f = level + neighbor.heuristic()
-                        pq.put((f, neighbor, level, path + [neighbor]))
-
+            node.generate_neighbors()
+            for neighbor in node.neighbors:
+                next_cost = cost + 1
+                if next_cost < best_cost.get(neighbor, float("inf")):
+                    best_cost[neighbor] = next_cost
+                    frontier.put((next_cost + neighbor.heuristic(), next_cost,
+                                  neighbor, path + [neighbor]))
         return "didn't work"
 
+
     def bfs(self):
-        queue = [(self.start_node, [self.start_node])]
-        visited = set()
+        if not self.start_node.is_solvable():
+            return None
+        from collections import deque
+        frontier = deque([(self.start_node, [self.start_node])])
+        visited = {self.start_node}
+        while frontier:
+            node, path = frontier.popleft()
+            if node.solved():
+                return "solved", path
+            node.generate_neighbors()
+            for neighbor in node.neighbors:
+                if neighbor not in visited:
+                    visited.add(neighbor)
+                    frontier.append((neighbor, path + [neighbor]))
+        return None
 
-        while len(queue) != 0:
-            n, path = queue.pop(0)
-            if n not in visited:
-                print(n)
-                if n.solved():
-                    return "solved", path
-
-                visited.add(n)
-
-                n.generate_neighbors()
-
-                for neighbor in n.neighbors:
-                    queue.append((neighbor, path + [neighbor]))
 
 
 start_board = [
-    ['3', '2', '1'],
-    ['4', '8', '6'],
-    ['7', ' ', "5"],
+    ['1', '2', '3'],
+    ['4', '5', '6'],
+    [' ', '7', '8'],
 ]
-
-n = Node(start_board)
-n1 = PuzzleGraph(n)
-
-# print(n.__hash__())
-# print(n.solved())
-n.heuristic()
-# print(n.heuristic())
-# n.generate_neighbors()
-# print(n.neighbors)
-
-# print("Correct A* route")
-# route = n1.astarsearch()
-# for r in route:
-# print(r)
-n1.bfs()
+graph = PuzzleGraph(Node(start_board))
+for name, result in [("BFS", graph.bfs()), ("A*", graph.astarsearch())]:
+    print(name)
+    if result is None or result == "didn't work":
+        print("Unsolvable starting board")
+        continue
+    path = result[1] if name == "BFS" else result
+    print("Moves:", len(path) - 1)
+    for state in path:
+        print(state)

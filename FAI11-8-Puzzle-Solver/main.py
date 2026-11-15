@@ -65,6 +65,8 @@ class Node:
         for i in range(len(self.board)):
             for j in range(len(self.board[i])):
                 num = self.board[i][j]
+                if num == " ":
+                    continue
                 x_dist = abs(i - correct_coords[num][0])
                 y_dist = abs(j - correct_coords[num][1])
                 total += x_dist + y_dist
@@ -72,6 +74,13 @@ class Node:
         return total
 
     # generates all neighbors of a node by expanding it
+    def is_solvable(self):
+        # A valid 3-by-3 board reaches the goal exactly when inversion parity is even.
+        values = [tile for row in self.board for tile in row if tile != " "]
+        inversions = sum(left > right for i, left in enumerate(values)
+                         for right in values[i + 1:])
+        return inversions % 2 == 0
+
     def generate_neighbors(self):
         neighbors = []
 
@@ -123,92 +132,68 @@ class PuzzleGraph:
 
     # solve puzzle with BFS
     def bfs_solve(self):
+        if not self.start_node.is_solvable():
+            return None
+        from collections import deque
+        frontier = deque([(self.start_node, [self.start_node])])
         visited = {self.start_node}
-        # stores tuples containing (node, path)
-        queue = [(self.start_node, [self.start_node])]
-        count = 0  # stores number of nodes visited
-
-        while len(queue) != 0:
-            n, path = queue.pop(0)
+        count = 0
+        while frontier:
+            node, path = frontier.popleft()
             count += 1
-
-            # if board is solved, return
-            if n.is_solved():
+            if node.is_solved():
                 return path, count
-
-            # if board not solved, generate children and continue searching
-            n.generate_neighbors()
-            for neighbor in n.neighbors:
+            node.generate_neighbors()
+            for neighbor in node.neighbors:
                 if neighbor not in visited:
                     visited.add(neighbor)
-                    queue.append((neighbor, path + [neighbor]))
+                    frontier.append((neighbor, path + [neighbor]))
+        return None
+
 
     # solve puzzle with A* Search
     def a_star_solve(self):
-        visited = set()
-        q = PriorityQueue()
-        count = 0  # stores number of nodes visited
+        if not self.start_node.is_solvable():
+            return None
+        frontier = PriorityQueue()
+        frontier.put((self.start_node.get_heuristic(), 0, self.start_node,
+                      [self.start_node]))
+        best_cost = {self.start_node: 0}
+        count = 0
+        while not frontier.empty():
+            _, cost, node, path = frontier.get()
+            if cost != best_cost[node]:
+                continue
+            count += 1
+            if node.is_solved():
+                return path, count
+            node.generate_neighbors()
+            for neighbor in node.neighbors:
+                next_cost = cost + 1
+                if next_cost < best_cost.get(neighbor, float("inf")):
+                    best_cost[neighbor] = next_cost
+                    frontier.put((next_cost + neighbor.get_heuristic(), next_cost,
+                                  neighbor, path + [neighbor]))
+        return None
 
-        # calculate h and g for the root
-        h = self.start_node.get_heuristic()
-        g = 0
-        f = g + h
-        # queue takes a tuple: (f, depth, node, path so far)
-        q.put((f, g, self.start_node, [self.start_node]))
-
-        while not q.empty():
-            f, depth, n, path = q.get()
-
-            # only search node if it hasn't been visited
-            if n not in visited:
-                count += 1
-                visited.add(n)
-
-                # if board is solved, return
-                if n.is_solved():
-                    return path, count
-
-                # if board not solved, generate neighbors and keep searching
-                n.generate_neighbors()
-                for neighbor in n.neighbors:
-                    if neighbor not in visited:
-                        h = neighbor.get_heuristic()
-                        g = depth + 1
-                        f = g + h
-
-                        q.put((f, g, neighbor, path + [neighbor]))
 
 
 start_board = [
-    ['8', '6', '5'],
-    ['1', '4', '2'],
-    ['7', ' ', '3'],
+    ['1', '2', '3'],
+    ['4', '5', '6'],
+    [' ', '7', '8'],
 ]
-
-startNode = Node(start_board)
-g = PuzzleGraph(startNode)
-
-# run bfs to solve 8 puzzle
-print('Running BFS...')
-bfs_start = time.time()
-bfs_path, bfs_count = g.bfs_solve()
-bfs_end = time.time()
-print('Time: ' + str(bfs_end - bfs_start))
-print('Number of States Searched: ' + str(bfs_count))
-print('Solution Length: ' + str(len(bfs_path)))
-print('Solution: ')
-for node in bfs_path:
-    print(node)
-print()
-
-# run a* search to solve 8 puzzle
-print('Running A* Search...')
-a_start = time.time()
-a_path, a_count = g.a_star_solve()
-a_end = time.time()
-print('Time: ' + str(a_end - a_start))
-print('Number of States Searched: ' + str(a_count))
-print('Solution Length: ' + str(len(a_path)))
-print('Solution: ')
-for node in a_path:
-    print(node)
+graph = PuzzleGraph(Node(start_board))
+for name, solve in [("BFS", graph.bfs_solve), ("A*", graph.a_star_solve)]:
+    print("Running " + name + "...")
+    started = time.time()
+    result = solve()
+    print("Time:", time.time() - started)
+    if result is None:
+        print("Unsolvable starting board")
+        continue
+    path, count = result
+    print("Number of States Searched:", count)
+    print("Moves:", len(path) - 1)
+    for node in path:
+        print(node)

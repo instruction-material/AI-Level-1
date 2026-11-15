@@ -82,7 +82,7 @@ Canonical source repository: `AI-Level-1`
 - Top-level folders: 61
 - Active linked folders: 60
 - Ledgered inactive/support folders: 1
-- Source-like files: 236
+- Source-like files: 241
 
 ## Studio contracts
 
@@ -111,3 +111,7 @@ FAI2-Adventure-Game follows only the current node's directed outgoing edges. The
 ## Legacy game-tree roots
 
 The updated Tic-Tac-Toe and two-player Marble constructors build and evaluate their supplied roots. Four checks cover both original global-root counterexamples, three minimax variants against every reachable endgame with at most four empty squares, and both Marble AI variants for counts zero through ten. The source gate now runs 30 suites and 70 checks across 236 source-like files.
+
+## Legacy puzzle and bounded-maze references
+
+Both sliding-puzzle examples exclude the space from Manhattan distance, record cheapest arrivals and reject odd-parity boards before search. Their worked defaults solve in two moves; breadth-first traversal uses a deque. Water Jug retains its documented greedy hint while A* uses an admissible unit-action lower bound. Maze DLS/IDS re-expand a shallower arrival. Ten independent checks include 536 sliding-puzzle shortest routes, all 24 water states, 2304 directed bounded-path cases and complete demonstrations. The obsolete Replit migration notice is retired in favor of a standard-library project README. The gate now runs 32 suites and 80 checks across 241 source-like files.
