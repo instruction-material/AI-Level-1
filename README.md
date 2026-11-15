@@ -22,3 +22,7 @@ The eighteen optional projects each contain a worked case, expected result or ou
 ## Earlier depth-limited traversal references
 
 FAI9-Implement-DLS and FAI9-Implement-IDS retain their original graph classes and printed demonstrations. A later shallower route now re-expands a vertex so reachable descendants stay within the requested limit. Their READMEs supply the six-vertex counterexample. The source gate includes four independent regression checks, including all 64 undirected four-vertex graphs at each start and limits zero through three.
+
+## Earlier informed-search references
+
+FAI10-Implement-A-Search and FAI10-Implement-Greedy-Search compare A* and greedy best-first search on one weighted graph. Their READMEs distinguish g, h and edge weights, show the cost-6 versus cost-21 routes and explain minimum-cost assumptions. Both preserve the original optional-goal call style. The source gate includes ten independent checks, including 1152 comparisons against a Floyd-Warshall oracle.

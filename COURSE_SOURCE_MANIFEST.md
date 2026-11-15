@@ -82,7 +82,7 @@ Canonical source repository: `AI-Level-1`
 - Top-level folders: 61
 - Active linked folders: 60
 - Ledgered inactive/support folders: 1
-- Source-like files: 221
+- Source-like files: 227
 
 ## Studio contracts
 
@@ -95,3 +95,7 @@ All eighteen generated optional folders now name a particular state, traversal, 
 ## Legacy depth-limit correction
 
 FAI9-Implement-DLS/main.py and FAI9-Implement-IDS/main.py now track the best depth reached, with unique printed first visits. Their READMEs and test_legacy_depth.py document and verify the shallower-route counterexample, cycles, disconnected vertices, original DLS demonstration and exhaustive small-graph reachability. Other legacy reference-bank entries retain their own review status.
+
+## Legacy informed-search correction
+
+FAI10-Implement-A-Search and FAI10-Implement-Greedy-Search now use per-state goal estimates and the same worked weighted graph. A* retains cheaper arrivals, reopens states and skips stale queue entries. Greedy best-first search uses h alone and reports its more expensive first goal route. Role-local READMEs explain assumptions, output and the original one-argument graph APIs. Ten independent regression checks include the depth-priority counterexample, inconsistent estimates, stale entries and 1152 tiny-graph shortest-path comparisons. The source gate now runs 27 suites and 54 checks; unrelated bank examples retain their own review status.
