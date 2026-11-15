@@ -1,3 +1,6 @@
+import math
+
+
 # BankAccount class
 class BankAccount:
 
@@ -7,11 +10,19 @@ class BankAccount:
         self.balance = 0
         self.interest_rate = ir  # as a decimal
 
+    @staticmethod
+    def _require_amount(amount):
+        if (not isinstance(amount, (int, float))
+                or not math.isfinite(amount) or amount < 0):
+            raise ValueError("Amounts must be finite nonnegative numbers")
+
     # instance methods
     def deposit(self, amount):
+        self._require_amount(amount)
         self.balance += amount
 
     def withdraw(self, amount):
+        self._require_amount(amount)
         if amount <= self.balance:
             self.balance -= amount
         else:

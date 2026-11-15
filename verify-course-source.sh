@@ -37,7 +37,8 @@ for check in \
   "FAI7-Unbeatable-Tic-Tac-Toe-AI-1/test_game.py" \
   "FAI8-The-Marble-Game-AI-Copy/test_game.py" \
   "test_legacy_depth.py" \
-  "test_legacy_informed.py"
+  "test_legacy_informed.py" \
+  "test_legacy_objects.py"
 do
   require_file "$check"
   python3 -B "$check"

@@ -17,7 +17,7 @@ class Deck:
 
     def __init__(self):
         self.deck = []
-        suits = ["Spades", "Hearts", "Clovers", "Diamonds"]
+        suits = ["Spades", "Hearts", "Clubs", "Diamonds"]
         for i in range(4):
             for j in range(1, 14):
                 card = Card(j, suits[i])
@@ -25,11 +25,10 @@ class Deck:
 
     # shuffles the order of the deck
     def shuffle(self):
-        for i in range(len(self.deck)):
-            j = random.randint(0, len(self.deck) - 1)
-            temp = self.deck[i]
-            self.deck[i] = self.deck[j]
-            self.deck[j] = temp
+        # Fisher-Yates: choose uniformly within the remaining prefix.
+        for i in range(len(self.deck) - 1, 0, -1):
+            j = random.randint(0, i)
+            self.deck[i], self.deck[j] = self.deck[j], self.deck[i]
 
     # draws the top card in deck
     def draw_card(self):

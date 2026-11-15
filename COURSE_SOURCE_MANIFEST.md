@@ -82,7 +82,7 @@ Canonical source repository: `AI-Level-1`
 - Top-level folders: 61
 - Active linked folders: 60
 - Ledgered inactive/support folders: 1
-- Source-like files: 227
+- Source-like files: 230
 
 ## Studio contracts
 
@@ -99,3 +99,7 @@ FAI9-Implement-DLS/main.py and FAI9-Implement-IDS/main.py now track the best dep
 ## Legacy informed-search correction
 
 FAI10-Implement-A-Search and FAI10-Implement-Greedy-Search now use per-state goal estimates and the same worked weighted graph. A* retains cheaper arrivals, reopens states and skips stale queue entries. Greedy best-first search uses h alone and reports its more expensive first goal route. Role-local READMEs explain assumptions, output and the original one-argument graph APIs. Ten independent regression checks include the depth-priority counterexample, inconsistent estimates, stale entries and 1152 tiny-graph shortest-path comparisons. The source gate now runs 27 suites and 54 checks; unrelated bank examples retain their own review status.
+
+## Legacy object examples
+
+FAI1-Bank-Account-Class rejects negative/nonfinite transaction amounts before state changes. FAI1-Deck-of-Cards uses uniform Fisher-Yates swaps and the Clubs suit. Both provide project-local worked guides. Six object-example checks join the source gate, now28suites/60checks/230source-likefiles, including complete demonstrations, amount boundaries and all six three-card permutation outcomes.
