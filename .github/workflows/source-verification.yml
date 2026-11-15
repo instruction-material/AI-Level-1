@@ -1,0 +1,31 @@
+name: AI source and graphics verification
+on:
+  push:
+    branches: [main, codex/ai-legacy-graphics-validation]
+  workflow_dispatch: {}
+permissions:
+  contents: read
+jobs:
+  source-and-graphics:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Verify all standard-library studio and legacy cases
+        run: ./verify-course-source.sh
+      - name: Create the isolated graphics environment
+        run: |
+          python3 -m venv "$RUNNER_TEMP/ai-graphics"
+          "$RUNNER_TEMP/ai-graphics/bin/python" -m pip install networkx matplotlib
+      - name: Run the unchanged published examples and verify all four PNGs
+        run: '"$RUNNER_TEMP/ai-graphics/bin/python" -B test_legacy_graphics.py --proof-dir output/legacy-graphics'
+      - name: Retain graph structures, package versions and original images
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: legacy-graphics
+          path: output/legacy-graphics/
+          if-no-files-found: error
+          retention-days: 30
